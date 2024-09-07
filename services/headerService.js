@@ -1,10 +1,7 @@
 const parseHeaders = (req) => {
-    let ipaddress = req.ip;
-    if (ipaddress.startsWith("::ffff:")) {
-        ipaddress = ipaddress.split(':').pop();
-    }
-    const language = req.headers['accept-language'];
-    const software = req.headers['user-agent'];
+    let ipaddress = req.headers['x-forwarded-for'] || req.connection.remoteAddress||req.ip;
+    let language = req.headers['accept-language'];
+    let software = req.headers['user-agent'];
 
     return {
         ipaddress,
